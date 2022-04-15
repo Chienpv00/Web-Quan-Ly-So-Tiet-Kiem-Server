@@ -3,6 +3,19 @@
 ```
 $ git clone https://github.com/Chienpv00/Web-Quan-Ly-So-Tiet-Kiem-Server.git
 $ npm install
+
+- Tạo tài khoản mysql - tạo tài khoản mới : 
+    1. create user 'sqluser'@'%' identified with mysql_native_password by 'password';
+    2.GRANT ALL PRIVILEGES ON *.* TO 'sqluser'@'%';
+    3. FLUSH PRIVILEGES;
+
+- Tạo file .env 
+*** 
+PORT = 4000
+USER = "sqluser" 
+PASSWORD = "password"  (mật khẩu user)
+***
+
 $ npm start
 link: localhost:4000/graphql
 ```
