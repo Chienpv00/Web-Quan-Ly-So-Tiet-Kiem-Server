@@ -28,6 +28,50 @@ class Database {
             });
         });
     }
+
+    getNguoiDung(TenDangNhap) {
+        return new Promise((resolve, reject) => {
+            // query statement
+            var sql = `select * from nguoidung where tendangnhap=\'${TenDangNhap}\'`;
+
+            // query db
+            this.connection.query(sql, (err, result) => {
+                if (err) reject(err);
+                // console.log(result[0]);
+                resolve(result[0]);
+            });
+        });
+    }
+
+    // get all field from table nhomnguoidung -> phan quyen
+    getNhomNguoiDung(MaNhom){ // tham so dau vao la ma nhom nguoi dung
+        return new Promise((resolve, reject) => {
+            // query statement
+            var sql = `select * from NhomNguoiDung where MaNhom = \'${MaNhom}\'`
+
+            this.connection.query(sql, (err, result) => {
+                if (err)
+                    reject(err);
+                resolve(result[0]); // tra ve mot object duy nhat
+            })
+        })
+    }
+
+    // get all field from table Chucnang
+    // input: MaNhom --- output: [{},{}]
+    getChucNangNguoiDung(MaNhom){
+        return new Promise((resolve, reject) => { 
+            //sql statement
+            const sql = `select * from chucnang where machucnang = (select machucnang from PHANQUYEN where MaNhom= \'${MaNhom}\')`
+
+            // return array
+            this.connection.query(sql, (err, result) => { 
+                if (err)
+                    reject(err)
+                resolve (result) // return arr
+             })
+         })
+    }
 }
 
 module.exports = Database;

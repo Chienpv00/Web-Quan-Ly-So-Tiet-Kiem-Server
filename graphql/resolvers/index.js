@@ -12,6 +12,45 @@ const resolvers = {
                 console.log(err);
             }
         },
+
+        checkLogin: async (_, { TenDangNhap, MatKhau }, { dataSources }) => {
+            try {
+                const user = await dataSources.database.getNguoiDung(TenDangNhap)
+                if (user){
+                    const nhom = await dataSources.database.getNhomNguoiDung(user.MaNhom);
+                    const chucNang = await dataSources.database.getChucNangNguoiDung(user.MaNhom);
+                    if (MatKhau === user.MatKhau) {
+                        return {
+                            code: 200,
+                            success: true,
+                            message: 'Dang nhap thanh cong',
+                            MaNhom: {
+                                MaNhom: nhom,
+                                MaChucNang: chucNang
+                            }
+                        }
+                    } else {
+                        return {
+                            code: 200,
+                            success: false,
+                            message: 'Dang nhap that bai'
+                        }
+                    }
+                } else {
+                    return {
+                        code: 200,
+                        success: false,
+                        message: 'Dang nhap that bai'
+                    }
+                }
+            } catch (error) {
+               return {
+                   code: error.extensions.response.status,
+                   success: false,
+                   message: error.extensions.response.body
+               }
+            }
+        },
     },
 
     Mutation: {
@@ -38,8 +77,8 @@ const resolvers = {
                         TenKhachHang: TenKhachHang,
                         DiaChi: DiaChi,
                         CMND: CMND,
-                        SDT: SDT
-                    }
+                        SDT: SDT,
+                    },
                 };
             } catch (err) {
                 return {

@@ -90,3 +90,34 @@ create table PHANQUYEN (
     foreign key (MaChucNang) references CHUCNANG(MaChucNang),
     primary key  (MaNhom, MaChucNang)
 );
+
+-- thiet lap tinh nang phan quyen -> login form
+-- chen field vao bang chucnang
+insert into chucnang values ('CN01', 'QuanTriHeThong', 'PhanQuyen');
+insert into chucnang values ('CN02', 'LapPhieuGoiTien', 'LapPhieuGoiTien');
+insert into chucnang values ('CN03', 'LapPhieuRutTien', 'LapPhieuRutTien');
+insert into chucnang values ('CN04', 'LapBaoCao', 'LapBaoCao');
+insert into chucnang values ('CN05', 'ThayDoiQuyDinh', 'ThayDoiQuyDinh');
+
+select * from chucnang;
+
+
+-- insert field into table NhomNguoiDung
+insert into NHOMNGUOIDUNG values ('N1', 'admin');
+insert into NHOMNGUOIDUNG values ('N2', 'ceo');
+insert into NHOMNGUOIDUNG values ('N3', 'emp');
+
+-- insert field into table PhanQuyen
+insert into PHANQUYEN values ('N1', 'CN01');
+insert into PHANQUYEN values ('N2', 'CN02');
+insert into PHANQUYEN values ('N2', 'CN03');
+insert into PHANQUYEN values ('N2', 'CN04');
+insert into PHANQUYEN values ('N2', 'CN05');
+insert into PHANQUYEN values ('N3', 'CN02');
+insert into PHANQUYEN values ('N3', 'CN03');
+insert into PHANQUYEN values ('N3', 'CN04');
+
+-- insert into NGUOIDUNG
+insert into NGUOIDUNG values ('admin', 'password', 'N1');
+
+-- git
