@@ -7,6 +7,7 @@ var db = mysql.createConnection({
     user: process.env.USER,
     password: process.env.PASSWORD,
     database: "quanlysotietkiem",
+    dateStrings: 'date'
 });
 
 module.exports = db;
