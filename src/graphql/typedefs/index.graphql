@@ -1,0 +1,26 @@
+type Query {
+    "Lay thong tin khach hang"
+    getKhachHang(MaKhachHang: String!): KhachHang!
+
+    "lay mat khau nguoi dung"
+    checkLogin(TenDangNhap: String!, MatKhau: String!): CheckLoginResponse!
+
+    "Kiem tra khach hang da co thong tin trong db chua"
+    checkKhachHangExists(CMND: String!): checkKhachHangExistsResponse!
+
+    "Lay phieu goi tien"
+    getPhieuGoiTien(MaPhieuGoi: String!): PhieuGoiTien!
+}
+
+type Mutation {
+    createKhachHang(
+        MaKhachHang: String!
+        TenKhachHang: String!
+        DiaChi: String!
+        CMND: String!
+        SDT: String!
+    ): createKhachHangResponse
+
+    "Tao phieu gui tien"
+    createPhieuGuiTien(MaLoaiTietKiem: String!, SoTienGoi: Float!, MaKhachHang: String!): createPhieuGuiTienResponse!
+}

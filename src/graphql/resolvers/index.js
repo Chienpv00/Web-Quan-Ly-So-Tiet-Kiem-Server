@@ -59,11 +59,12 @@ const resolvers = {
         checkKhachHangExists: async (_, { CMND }, { dataSources }) => {
             try {
                 const isCMND = await dataSources.database.checkKhachHangExists(CMND);
-                if (isCMND) {
+                if (isCMND.length == 1) {
                     return {
                         code: 200,
                         success: true,
                         exists: true,
+                        KhachHang: isCMND[0]
                     };
                 } else {
                     return {
@@ -80,6 +81,15 @@ const resolvers = {
                 };
             }
         },
+
+        getPhieuGoiTien: async (_, {MaPhieuGoi}, {dataSources}) => { 
+            try {
+                
+            } catch (error) {
+                
+            }
+         }
+        
     },
    
     
@@ -136,19 +146,30 @@ const resolvers = {
                     .toString()
                     .concat('/', (now.getMonth() + 1).toString(), '/', now.getDate().toString());
                 console.log(typeof NgayGoi);
+                let NgayDaoHanKeTiep;
                 const KyHan = await dataSources.database.getKyHan(MaLoaiTietKiem);
-                console.log(typeof KyHan);
-                const NgayDaoHanKeTiepms = ms + parseInt(KyHan.KyHan) * 30 * 24 * 60 * 60 * 1000;
-                const NgayDaoHanKeTiepCons = new Date(NgayDaoHanKeTiepms);
-
-                // tinh ngay dao han ke tiep
-                const NgayDaoHanKeTiep = NgayDaoHanKeTiepCons.getFullYear()
-                    .toString()
-                    .concat('/', (NgayDaoHanKeTiepCons.getMonth() + 1).toString(), '/', NgayDaoHanKeTiepCons.getDate().toString());
+                if (MaLoaiTietKiem == 'LTK1') {
+                     NgayDaoHanKeTiep = null
+                } else {
+                    const NgayDaoHanKeTiepms = ms + parseInt(KyHan.KyHan) * 30 * 24 * 60 * 60 * 1000;
+                    const NgayDaoHanKeTiepCons = new Date(NgayDaoHanKeTiepms);
+    
+                    // tinh ngay dao han ke tiep
+                    NgayDaoHanKeTiep = NgayDaoHanKeTiepCons.getFullYear()
+                        .toString()
+                        .concat('/', (NgayDaoHanKeTiepCons.getMonth() + 1).toString(), '/', NgayDaoHanKeTiepCons.getDate().toString());
+    
+                }
+               
+                console.log(MaPhieuGoi);
+                console.log(NgayGoi);
                 console.log(NgayDaoHanKeTiep);
 
+
+                
                 const LaiSuatApDung = KyHan.LaiSuatHienTai;
-                console.log(typeof LaiSuatApDung);
+                console.log(LaiSuatApDung)
+
                 // mysql insert into
                 const result = await dataSources.database.createPhieuGoiTien(
                     MaPhieuGoi,

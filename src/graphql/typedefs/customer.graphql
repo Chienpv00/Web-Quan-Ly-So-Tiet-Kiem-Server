@@ -1,0 +1,22 @@
+type KhachHang {
+    MaKhachHang: String!
+    TenKhachHang: String!
+    DiaChi: String!
+    CMND: String!
+    SDT: String!
+}
+
+type createKhachHangResponse {
+    code: Int!
+    success: Boolean!
+    message: String!
+    khachhang: KhachHang
+}
+
+ "Khach hang"
+    type checkKhachHangExistsResponse {
+        code: Int!
+        success: Boolean!
+        exists: Boolean!
+        KhachHang: KhachHang
+    }

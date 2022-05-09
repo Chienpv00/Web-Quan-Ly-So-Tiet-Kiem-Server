@@ -98,7 +98,7 @@ const typeDefs = gql`
         "Số dư hiện có (số tiền gửi + tiền lãi phát sinh)"
         SoDu: Float!
         "Ngày đáo hạn kế tiếp"
-        NgayDaoHanKeTiep: String!
+        NgayDaoHanKeTiep: String
         "Lãi suất áp dụng"
         LaiSuatApDung: Float!
         "Trạng thái đóng/mở của phiếu (1 là mở, 0 là đóng)"
@@ -127,6 +127,7 @@ const typeDefs = gql`
         code: Int!
         success: Boolean!
         exists: Boolean!
+        KhachHang: KhachHang
     }
 
     "Phieu gui tien res"

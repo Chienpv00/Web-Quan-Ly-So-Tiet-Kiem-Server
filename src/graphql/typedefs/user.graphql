@@ -1,0 +1,30 @@
+type ChucNang {
+    MaChucNang: String!
+    TenChucNang: String!
+    TenManHinhDuocLoad: String!
+}
+
+type NhomNguoiDung {
+    MaNhom: String!
+    TenNhom: String!
+}
+
+type PhanQuyen {
+    MaNhom: NhomNguoiDung!
+    MaChucNang: [ChucNang!]!
+}
+
+type NguoiDung {
+    TenDangNhap: String!
+    MatKhau: String!
+    MaNhom: String!
+}
+
+type CheckLoginResponse {
+    code: Int!
+    success: Boolean!
+    message: String!
+    TenDangNhap: String!
+    MaNhom: String
+    PhanQuyen: PhanQuyen
+}

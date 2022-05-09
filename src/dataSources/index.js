@@ -75,12 +75,12 @@ class Database {
     checkKhachHangExists(CMND) {
         return new Promise((resolve, reject) => {
             // sql statment
-            const sql = `select CMND from KhachHang where CMND=\'${CMND}\'`;
+            const sql = `select * from KhachHang where CMND=\'${CMND}\'`;
 
             this.connection.query(sql, (err, result) => {
                 if (err) reject(err);
-                console.log(result[0]);
-                resolve(result[0]);
+                console.log(result);
+                resolve(result);
             });
         });
     }
