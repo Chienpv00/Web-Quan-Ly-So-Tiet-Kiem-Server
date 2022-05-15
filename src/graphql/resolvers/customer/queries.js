@@ -2,8 +2,11 @@ const customerQueries = {
     getKhachHang: async (_, { MaKhachHang }, { dataSources }) => {
         try {
             const KhachHang = await dataSources.database.getKhachHang(MaKhachHang);
+            if (KhachHang.length === 0)
+                return null
+                else
             return {
-                ...KhachHang,
+                ...KhachHang[0],
             };
         } catch (err) {
             console.log(err);
@@ -35,6 +38,19 @@ const customerQueries = {
         }
     },
 
+    getKhachHangByCmnd: async (_, {CMND}, {dataSources})=>{
+        try {
+            const KhachHang = await dataSources.database.getKhachHangByCmnd(CMND);
+            if (KhachHang.length === 0)
+                return null
+                else
+            return {
+                ...KhachHang[0],
+            };
+        } catch (err) {
+            console.log(err);
+        }
+    }
 }
 
 module.exports = customerQueries

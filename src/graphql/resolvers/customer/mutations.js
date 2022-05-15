@@ -1,10 +1,21 @@
 const customerMutations = {
     createKhachHang: async (
         _,
-        { MaKhachHang, TenKhachHang, DiaChi, CMND, SDT },
+        { TenKhachHang, DiaChi, CMND, SDT },
         { dataSources }
     ) => {
         try {
+            const checkId = await dataSources.database.checkKhachHangExists(CMND)
+            console.log("🚀 ~ file: mutations.js ~ line 9 ~ checkId", checkId)
+            
+            if(checkId.length !== 0){
+                return {
+                    code: 200,
+                    message: "Trung cmnd",
+                    success: false,
+                }
+            }
+            const MaKhachHang = await dataSources.database.createMaKhachHangNext();
             const res = await dataSources.database.createKhachHang(
                 MaKhachHang,
                 TenKhachHang,
@@ -27,9 +38,9 @@ const customerMutations = {
             };
         } catch (err) {
             return {
-                code: err.extensions.response.status,
+                code: 404,
                 success: false,
-                message: err.extensions.response.body,
+                message: err,
             };
         }
     },

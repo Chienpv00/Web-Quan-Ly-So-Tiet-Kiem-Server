@@ -10,7 +10,6 @@ class Database {
             // query in database
             this.connection.query(sql, (err, result) => {
                 if (err) reject(err); // throw err
-                console.log(result);
                 resolve('Chen khach hang moi thanh cong');
             });
         });
@@ -24,7 +23,7 @@ class Database {
             // query syntax
             this.connection.query(sql, (err, result) => {
                 if (err) reject(err);
-                resolve(result[0]); // gui gia tri ra ngoai
+                resolve(result); // gui gia tri ra ngoai
             });
         });
     }
@@ -37,7 +36,6 @@ class Database {
             // query db
             this.connection.query(sql, (err, result) => {
                 if (err) reject(err);
-                // console.log(result[0]);
                 resolve(result[0]);
             });
         });
@@ -79,7 +77,18 @@ class Database {
 
             this.connection.query(sql, (err, result) => {
                 if (err) reject(err);
-                console.log(result);
+                resolve(result);
+            });
+        });
+    }
+
+    getKhachHangByCmnd(CMND){
+        return new Promise((resolve, reject) => {
+            // sql statment
+            const sql = `select * from KhachHang where CMND=\'${CMND}\'`;
+
+            this.connection.query(sql, (err, result) => {
+                if (err) reject(err);
                 resolve(result);
             });
         });
@@ -126,6 +135,8 @@ class Database {
         });
     }
 
+    // lay LoaiTietKiem
+
     // tao mot phieu gui tien moi
     createPhieuGoiTien(
         MaPhieuGoi,
@@ -156,8 +167,48 @@ class Database {
             const sql = `select * from PhieuGoiTien where MaPhieuGoi = \'${MaPhieuGoi}\'`;
             this.connection.query(sql, (err, result) => {
                 if (err) reject(err);
-                if (result.length === 0) resolve({})
+                if (result.length === 0) resolve({});
                 resolve(result[0]);
+            });
+        });
+    }
+
+    getPhieuGoiTienbyMaKH(MaKhachHang) {
+        return new Promise((resolve, reject) => {
+            const sql = `select * from PhieuGoiTien where MaKhachHang = \'${MaKhachHang}\' and TrangThai = 1`;
+            this.connection.query(sql, (err, result) => {
+                if (err) reject(err);
+                resolve(result);
+            });
+        });
+    }
+
+    createPhieuRutTien(MaPhieuGoi, NgayRut, TienLaiPhatSinh, SoDu) {
+        return new Promise((resolve, reject) => {
+            const sql = `UPDATE PhieuGoiTien SET NgayRut = \'${NgayRut}\', TienLaiPhatSinh = ${this.connection.escape(
+                TienLaiPhatSinh
+            )}, SoDu = ${this.connection.escape(
+                SoDu
+            )}, TrangThai=0  where MaPhieuGoi=${this.connection.escape(MaPhieuGoi)} `;
+            this.connection.query(sql, (err, result) => {
+                err ? reject(err) : resolve(result);
+            });
+        });
+    }
+
+    createMaKhachHangNext(){
+        // dau tien doc ma khach hang len, sau do tao ma moi rồi trả vè
+        return new Promise((resolve, reject) => {
+            const sql = `select MaKhachHang from khachhang`;
+
+            this.connection.query(sql, (err, result) => {
+                if (err) reject(err)
+                if (result.length === 0 ){
+                    resolve('KH1');
+                } else {
+                    const arr = result.map((value) => { return parseInt(value.MaKhachHang.substr(2)) })
+                    resolve('KH' + (Math.max.apply(null, arr) + 1))
+                }
             });
         });
     }

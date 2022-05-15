@@ -4,8 +4,8 @@ require("dotenv").config();
 
 var db = mysql.createConnection({
     host: "localhost",
-    user: process.env.USER,
-    password: process.env.PASSWORD,
+    user: 'sqluser',
+    password: 'password',
     database: "quanlysotietkiem",
     dateStrings: 'date'
 });

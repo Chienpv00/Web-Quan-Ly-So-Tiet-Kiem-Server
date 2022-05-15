@@ -61,3 +61,36 @@ type createPhieuGuiTienResponse {
     message: String!
     PhieuGoiTien: PhieuGoiTien
 }
+
+"Phieu Rut Tien res"
+type createPhieuRutTienResponse {
+    code: Int!
+    success: Boolean!
+    message: String!
+}
+
+"danh sach phieu gui tien"
+type DanhSachPgt {
+ "Mã phiếu gởi tiền tiết kiệm"
+    MaPhieuGoi: String!
+    "Tham chiếu tới bảng KHACHHANG (MaKhachHang)"
+    MaKhachHang: String
+    "Tham chiếu tới bảng LOAITIETKIEM (MaLoaiTK)"
+    MaLoaiTietKiem: String!
+    "Số tiền gởi tiết kiệm"
+    SoTienGoi: Float!
+    "Ngày lập phiếu gởi tiền"
+    NgayGoi: String!
+    "Ngày rút tiền (ngày đóng phiếu)"
+    NgayRut: String
+    "Tiền lãi phát sinh (tổng số tiền lãi tích lũy được khi khách hàng không đến nhận)"
+    TienLaiPhatSinh: Float!
+    "Số dư hiện có (số tiền gửi + tiền lãi phát sinh)"
+    SoDu: Float!
+    "Ngày đáo hạn kế tiếp"
+    NgayDaoHanKeTiep: String
+    "Lãi suất áp dụng"
+    LaiSuatApDung: Float!
+    "Trạng thái đóng/mở của phiếu (1 là mở, 0 là đóng)"
+    TrangThai: Boolean!
+}
