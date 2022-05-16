@@ -1,6 +1,6 @@
 const db = require('../config/db');
 
-const sql = `select MaKhachHang from khachhang`;
+const sql = `select MaPhieuGoi from phieugoitien`;
 
 db.query(sql, (err, result) => {
     if (err) {

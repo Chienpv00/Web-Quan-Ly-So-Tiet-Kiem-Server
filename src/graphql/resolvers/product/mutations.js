@@ -1,21 +1,15 @@
 const calInterest = require('../../../middleware/tinhTienLai');
-
+const date = require('date-and-time');
 const productMutations = {
     createPhieuGuiTien: async (_, { MaLoaiTietKiem, SoTienGoi, MaKhachHang }, { dataSources }) => {
         try {
             // tinh ma phieu goi ke tiep
             const MaPhieuGoi = await dataSources.database.getMaPhieuGoiNext();
-            console.log(MaPhieuGoi);
-
             const now = new Date(); // create date obj
             const ms = now.valueOf(); // get date = ms
 
             // tinh ngay goi hien tai tu new Date()
-            const NgayGoi = now
-                .getFullYear()
-                .toString()
-                .concat('/', (now.getMonth() + 1).toString(), '/', now.getDate().toString());
-            console.log(NgayGoi);
+            const NgayGoi = date.format(now, "YYYY-MM-DD")
 
             let NgayDaoHanKeTiep;
             const KyHan = await dataSources.database.getKyHan(MaLoaiTietKiem);
@@ -26,20 +20,12 @@ const productMutations = {
                 // tinh ngay dao han ke tiep
                 const NgayDaoHanKeTiepms = ms + parseInt(KyHan.KyHan) * 30 * 24 * 60 * 60 * 1000;
                 const NgayDaoHanKeTiepCons = new Date(NgayDaoHanKeTiepms);
-                NgayDaoHanKeTiep = NgayDaoHanKeTiepCons.getFullYear()
-                    .toString()
-                    .concat(
-                        '/',
-                        (NgayDaoHanKeTiepCons.getMonth() + 1).toString(),
-                        '/',
-                        NgayDaoHanKeTiepCons.getDate().toString()
-                    );
+                NgayDaoHanKeTiep = date.format(NgayDaoHanKeTiepCons, "YYYY-MM-DD")
             }
 
-            console.log(NgayDaoHanKeTiep);
+            
 
             const LaiSuatApDung = KyHan.LaiSuatHienTai;
-            console.log(LaiSuatApDung);
 
             // mysql insert into
             const result = await dataSources.database.createPhieuGoiTien(
@@ -63,7 +49,11 @@ const productMutations = {
                     code: 200,
                     success: true,
                     message: 'Lap Phieu Gui tien Thanh cong',
-                    PhieuGoiTien: PhieuGoiTien,
+                    PhieuGoiTien: {
+                        ...PhieuGoiTien,
+                        MaKhachHang: MaKhachHang,
+                        MaLoaiTietKiem: MaLoaiTietKiem
+                    },
                 };
             } else {
                 return {
@@ -85,7 +75,6 @@ const productMutations = {
         try {
             // get phieu goi tien voi ma phieu goi
             const pgt = await dataSources.database.getPhieuGoiTien(MaPhieuGoi);
-            console.log('pgt: ', pgt);
             const SoDu = await calInterest(
                 pgt.MaLoaiTietKiem,
                 pgt.SoTienGoi,

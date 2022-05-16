@@ -6,7 +6,6 @@ const customerMutations = {
     ) => {
         try {
             const checkId = await dataSources.database.checkKhachHangExists(CMND)
-            console.log("🚀 ~ file: mutations.js ~ line 9 ~ checkId", checkId)
             
             if(checkId.length !== 0){
                 return {

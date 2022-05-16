@@ -82,7 +82,7 @@ class Database {
         });
     }
 
-    getKhachHangByCmnd(CMND){
+    getKhachHangByCmnd(CMND) {
         return new Promise((resolve, reject) => {
             // sql statment
             const sql = `select * from KhachHang where CMND=\'${CMND}\'`;
@@ -99,7 +99,7 @@ class Database {
         // sql statement
 
         return new Promise((resolve, reject) => {
-            const sql = `select MaPhieuGoi from phieugoitien order by maphieugoi desc limit 1`;
+            const sql = `select MaPhieuGoi from phieugoitien`;
 
             this.connection.query(sql, (err, result) => {
                 if (err) {
@@ -109,14 +109,10 @@ class Database {
                 if (result.length === 0) {
                     resolve('PGT1');
                 } else {
-                    // resolve(result)
-                    // cat chuoi resutl tach chu vs so ra 2 phan
-                    // parseInt phan sau, sau do + 1
-                    // gep chuoi va resolve
-                    let str = result[0].MaPhieuGoi.substr(0, 3);
-                    let nbr = parseInt(result[0].MaPhieuGoi.substr(3));
-                    nbr += 1;
-                    resolve(str + nbr);
+                    const arr = result.map((value) => {
+                        return parseInt(value.MaPhieuGoi.substr(3));
+                    });
+                    resolve('PGT' + (Math.max.apply(null, arr) + 1));
                 }
             });
         });
@@ -136,6 +132,14 @@ class Database {
     }
 
     // lay LoaiTietKiem
+    getLoaiTietKiem(MaLoaiTietKiem) {
+        return new Promise((resolve, reject) => { 
+            const sql = `select * from LoaiTietKiem where MaLoaiTietKiem = \'${MaLoaiTietKiem}\'`
+            this.connection.query(sql, (err, result) => { 
+                err? reject(err): resolve(result)
+             })
+         })
+    }
 
     // tao mot phieu gui tien moi
     createPhieuGoiTien(
@@ -152,7 +156,12 @@ class Database {
         TrangThai
     ) {
         return new Promise((resolve, reject) => {
-            const sql = `insert into PhieuGoiTien values (\'${MaPhieuGoi}\', \'${MaKhachHang}\', \'${MaLoaiTietKiem}\', ${SoTienGoi}, \'${NgayGoi}\', ${NgayRut}, ${TienPhatSinh}, ${Sodu}, \'${NgayDaoHanKeTiep}\', ${LaiSuatApDung}, ${TrangThai})`;
+            let sql;
+            if (NgayDaoHanKeTiep === null) {
+                sql = `insert into PhieuGoiTien values (\'${MaPhieuGoi}\', \'${MaKhachHang}\', \'${MaLoaiTietKiem}\', ${SoTienGoi}, \'${NgayGoi}\', ${NgayRut}, ${TienPhatSinh}, ${Sodu}, ${NgayDaoHanKeTiep}, ${LaiSuatApDung}, ${TrangThai})`;
+            } else {
+                sql = `insert into PhieuGoiTien values (\'${MaPhieuGoi}\', \'${MaKhachHang}\', \'${MaLoaiTietKiem}\', ${SoTienGoi}, \'${NgayGoi}\', ${NgayRut}, ${TienPhatSinh}, ${Sodu}, \'${NgayDaoHanKeTiep}\', ${LaiSuatApDung}, ${TrangThai})`;
+            }
 
             this.connection.query(sql, (err, result) => {
                 if (err) reject(err);
@@ -196,19 +205,30 @@ class Database {
         });
     }
 
-    createMaKhachHangNext(){
+    createMaKhachHangNext() {
         // dau tien doc ma khach hang len, sau do tao ma moi rồi trả vè
         return new Promise((resolve, reject) => {
             const sql = `select MaKhachHang from khachhang`;
 
             this.connection.query(sql, (err, result) => {
-                if (err) reject(err)
-                if (result.length === 0 ){
+                if (err) reject(err);
+                if (result.length === 0) {
                     resolve('KH1');
                 } else {
-                    const arr = result.map((value) => { return parseInt(value.MaKhachHang.substr(2)) })
-                    resolve('KH' + (Math.max.apply(null, arr) + 1))
+                    const arr = result.map((value) => {
+                        return parseInt(value.MaKhachHang.substr(2));
+                    });
+                    resolve('KH' + (Math.max.apply(null, arr) + 1));
                 }
+            });
+        });
+    }
+
+    getLoaitk() {
+        return new Promise((resolve, reject) => {
+            const sql = 'select * from LoaiTietKiem';
+            this.connection.query(sql, (err, result) => {
+                err ? reject(err) : resolve(result);
             });
         });
     }
