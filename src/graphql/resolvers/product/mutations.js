@@ -9,7 +9,7 @@ const productMutations = {
             const ms = now.valueOf(); // get date = ms
 
             // tinh ngay goi hien tai tu new Date()
-            const NgayGoi = date.format(now, "YYYY-MM-DD")
+            const NgayGoi = date.format(now, 'YYYY-MM-DD');
 
             let NgayDaoHanKeTiep;
             const KyHan = await dataSources.database.getKyHan(MaLoaiTietKiem);
@@ -20,10 +20,8 @@ const productMutations = {
                 // tinh ngay dao han ke tiep
                 const NgayDaoHanKeTiepms = ms + parseInt(KyHan.KyHan) * 30 * 24 * 60 * 60 * 1000;
                 const NgayDaoHanKeTiepCons = new Date(NgayDaoHanKeTiepms);
-                NgayDaoHanKeTiep = date.format(NgayDaoHanKeTiepCons, "YYYY-MM-DD")
+                NgayDaoHanKeTiep = date.format(NgayDaoHanKeTiepCons, 'YYYY-MM-DD');
             }
-
-            
 
             const LaiSuatApDung = KyHan.LaiSuatHienTai;
 
@@ -52,7 +50,7 @@ const productMutations = {
                     PhieuGoiTien: {
                         ...PhieuGoiTien,
                         MaKhachHang: MaKhachHang,
-                        MaLoaiTietKiem: MaLoaiTietKiem
+                        MaLoaiTietKiem: MaLoaiTietKiem,
                     },
                 };
             } else {
@@ -91,24 +89,28 @@ const productMutations = {
                 SoDu
             );
 
-            return callDB.affectedRows===1 ? {
-                code: 200,
-                success: true,
-                message: "Lap prt thanh cong!"
-            } : {
-                code: 200,
-                success: false,
-                message: "that bai"
-            }
+            return callDB.affectedRows === 1
+                ? {
+                      code: 200,
+                      success: true,
+                      message: 'Lap prt thanh cong!',
+                  }
+                : {
+                      code: 200,
+                      success: false,
+                      message: 'that bai',
+                  };
         } catch (error) {
             console.log('err lap prt: ', error);
             return {
                 code: 404,
                 success: false,
-                message: "That bai"
-            }
+                message: 'That bai',
+            };
         }
     },
+
+    
 };
 
 module.exports = productMutations;

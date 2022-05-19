@@ -133,12 +133,12 @@ class Database {
 
     // lay LoaiTietKiem
     getLoaiTietKiem(MaLoaiTietKiem) {
-        return new Promise((resolve, reject) => { 
-            const sql = `select * from LoaiTietKiem where MaLoaiTietKiem = \'${MaLoaiTietKiem}\'`
-            this.connection.query(sql, (err, result) => { 
-                err? reject(err): resolve(result)
-             })
-         })
+        return new Promise((resolve, reject) => {
+            const sql = `select * from LoaiTietKiem where MaLoaiTietKiem = \'${MaLoaiTietKiem}\'`;
+            this.connection.query(sql, (err, result) => {
+                err ? reject(err) : resolve(result);
+            });
+        });
     }
 
     // tao mot phieu gui tien moi
@@ -227,6 +227,15 @@ class Database {
     getLoaitk() {
         return new Promise((resolve, reject) => {
             const sql = 'select * from LoaiTietKiem';
+            this.connection.query(sql, (err, result) => {
+                err ? reject(err) : resolve(result);
+            });
+        });
+    }
+
+    getPhieuGoiTienbyMaLTK(maLTK) {
+        return new Promise((resolve, reject) => {
+            const sql = `select * from PhieuGoiTien where MaLoaiTietKiem = \'${maLTK}\'`;
             this.connection.query(sql, (err, result) => {
                 err ? reject(err) : resolve(result);
             });

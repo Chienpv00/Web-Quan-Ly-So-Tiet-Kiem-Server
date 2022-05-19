@@ -17,6 +17,9 @@ type Query {
     getDSPGTbyMaKH(MaKhachHang: String!): [DanhSachPgt]!
 
     getLoaitk: [LoaiTietKiem!]!
+    
+    "get list of pgt by Ltk"
+    getDSPGTbyLTK(maLTK: String!): [DanhSachPgt]!
 }
 
 type Mutation {
