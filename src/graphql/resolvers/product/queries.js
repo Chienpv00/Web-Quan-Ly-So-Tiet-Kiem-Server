@@ -53,6 +53,27 @@ const productQueries = {
             console.log(error);
         }
     },
+
+    getDSPGTbyStatus: async (_, {status}, {dataSources}) => { 
+        try {
+            const pgtArr = await dataSources.database.getPhieuGoiTienbyStatus(status);
+            if (pgtArr.length === 0) {
+                return pgtArr;
+            } else {
+                pgtArr.forEach((element) => {
+                    element.SoDu = tinhTienLai(
+                        element.MaLoaiTietKiem,
+                        element.SoTienGoi,
+                        element.NgayGoi,
+                        element.NgayDaoHanKeTiep
+                    );
+                });
+                return pgtArr;
+            }
+        } catch (error) {
+            console.log(error);
+        }
+     }
 };
 
 module.exports = productQueries;

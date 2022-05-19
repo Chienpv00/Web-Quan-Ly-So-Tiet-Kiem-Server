@@ -17,9 +17,12 @@ type Query {
     getDSPGTbyMaKH(MaKhachHang: String!): [DanhSachPgt]!
 
     getLoaitk: [LoaiTietKiem!]!
-    
+
     "get list of pgt by Ltk"
     getDSPGTbyLTK(maLTK: String!): [DanhSachPgt]!
+
+    "get list of pgt by status"
+    getDSPGTbyStatus(status: Boolean!): [DanhSachPgt]!
 }
 
 type Mutation {

@@ -241,6 +241,15 @@ class Database {
             });
         });
     }
+
+    getPhieuGoiTienbyStatus(status){
+        return new Promise((resolve, reject) => {
+            const sql = `select * from PhieuGoiTien where TrangThai = ${status}`;
+            this.connection.query(sql, (err, result) => {
+                err ? reject(err) : resolve(result);
+            });
+        });
+    }
 }
 
 module.exports = Database;
