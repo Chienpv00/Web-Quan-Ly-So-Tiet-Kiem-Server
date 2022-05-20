@@ -29,7 +29,7 @@ const productQueries = {
 
     getLoaitk: async (_, __, { dataSources }) => {
         const loaitk = await dataSources.database.getLoaitk();
-        console.log("🚀 ~ file: queries.js ~ line 32 ~ getLoaitk: ~ loaitk", loaitk)
+        console.log('🚀 ~ file: queries.js ~ line 32 ~ getLoaitk: ~ loaitk', loaitk);
         return loaitk;
     },
 
@@ -54,7 +54,7 @@ const productQueries = {
         }
     },
 
-    getDSPGTbyStatus: async (_, {status}, {dataSources}) => { 
+    getDSPGTbyStatus: async (_, { status }, { dataSources }) => {
         try {
             const pgtArr = await dataSources.database.getPhieuGoiTienbyStatus(status);
             if (pgtArr.length === 0) {
@@ -73,12 +73,12 @@ const productQueries = {
         } catch (error) {
             console.log(error);
         }
-     },
+    },
 
-     filterPGT: async (_,{input}, {dataSources}) => {
-         const result  = await dataSources.database.filterPGT(input)
-         return result
-     }
+    filterPGT: async (_, { input }, { dataSources }) => {
+        const result = await dataSources.database.filterPGT(input);
+        return result;
+    },
 };
 
 module.exports = productQueries;
