@@ -23,6 +23,9 @@ type Query {
 
     "get list of pgt by status"
     getDSPGTbyStatus(status: Boolean!): [DanhSachPgt]!
+
+    "product queries"
+    filterPGT(input: filterListPGT!): [DanhSachPgt]!
 }
 
 type Mutation {
@@ -42,4 +45,13 @@ type Mutation {
 
     "Tao Phieu Rut Tien"
     createPhieuRutTien(MaPhieuGoi: String!, NgayRut: String!): createPhieuRutTienResponse!
+}
+
+
+input filterListPGT{
+    loaiTK: String
+    status: String
+    month: String
+    year: String
+
 }

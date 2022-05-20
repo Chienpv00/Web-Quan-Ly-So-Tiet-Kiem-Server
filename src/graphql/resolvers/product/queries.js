@@ -73,6 +73,11 @@ const productQueries = {
         } catch (error) {
             console.log(error);
         }
+     },
+
+     filterPGT: async (_,{input}, {dataSources}) => {
+         const result  = await dataSources.database.filterPGT(input)
+         return result
      }
 };
 

@@ -242,11 +242,41 @@ class Database {
         });
     }
 
-    getPhieuGoiTienbyStatus(status){
+    getPhieuGoiTienbyStatus(status) {
         return new Promise((resolve, reject) => {
             const sql = `select * from PhieuGoiTien where TrangThai = ${status}`;
             this.connection.query(sql, (err, result) => {
                 err ? reject(err) : resolve(result);
+            });
+        });
+    }
+
+    filterPGT({ loaiTK, status, month, year }) {
+        let sqlLoaiTK;
+        let sqlStatus;
+        let sqlDate;
+        loaiTK === '-1'
+            ? (sqlLoaiTK = "MaLoaiTietKiem Like '%'")
+            : (sqlLoaiTK = `MaLoaiTietKiem = \'${loaiTK}\'`);
+        status === '-1' ? (sqlStatus = '') : (sqlStatus = `and TrangThai = ${status}`);
+
+        if (month === '-1' && year == '-1') {
+            sqlDate = '';
+        } else if (month === '-1') {
+            sqlDate = `and NgayGoi LIKE \'${year}%\'`;
+        } else {
+            if (parseInt(month) < 10) {
+                month = '0' + month;
+            }
+
+            sqlDate = `and NgayGoi LIKE \'${year}-${month}%\'`;
+        }
+
+        return new Promise((resolve, reject) => {
+            let sql = `select * from PhieuGoiTien where ${sqlLoaiTK} ${sqlStatus} ${sqlDate} `;
+            console.log(sql);
+            this.connection.query(sql, (err, results) => {
+                err ? reject(err) : resolve(results);
             });
         });
     }
