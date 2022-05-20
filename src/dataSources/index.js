@@ -262,8 +262,13 @@ class Database {
 
         if (month === '-1' && year == '-1') {
             sqlDate = '';
-        } else if (month === '-1') {
+        } else if (month === '-1' && year != '-1') {
             sqlDate = `and NgayGoi LIKE \'${year}%\'`;
+        } else if ((month != '-1') & (year == '-1')) {
+            if (parseInt(month) < 10) {
+                month = '0' + month;
+            }
+            sqlDate = `and NgayGoi LIKE \'_____${month}%\'`;
         } else {
             if (parseInt(month) < 10) {
                 month = '0' + month;
