@@ -83,7 +83,6 @@ const productQueries = {
 
     getReportDay: async (_, { date }, { dataSources }) => {
         const LoaiTietKiem = await dataSources.database.getLoaitk();
-        let soduSauCung;
 
         // lay dc 1 mang chua mang cac phieu goi tien theo dieu kien loai tiet kiem nao
         const result = new Array(LoaiTietKiem.length).fill([]);
@@ -95,7 +94,7 @@ const productQueries = {
         // create array tra ket qua
         const response = LoaiTietKiem.map((value) => {
             return {
-                LoaiTietKiem: value.MaLoaiTietKiem,
+                LoaiTietKiem: value.TenLoaiTietKiem,
                 TongThu: 0,
                 TongChi: 0,
             };
@@ -114,7 +113,7 @@ const productQueries = {
         }
 
         for (let i = 0; i < result.length; i++) {
-            response[i].LoaiTietKiem = result[i][0].MaLoaiTietKiem;
+            // response[i].LoaiTietKiem = result[i][0].MaLoaiTietKiem;
             if (result[i].length === 0) {
                 response[i].TongThu = 0;
                 response[i].TongChi = 0;
