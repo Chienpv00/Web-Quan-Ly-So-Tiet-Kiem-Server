@@ -1,4 +1,5 @@
 const tinhTienLai = require('../../../middleware/tinhTienLai');
+const date = require('date-and-time');
 
 const productQueries = {
     getPhieuGoiTien: async (_, { MaPhieuGoi }, { dataSources }) => {
@@ -89,7 +90,7 @@ const productQueries = {
 
         // declare date at the time we rut tien
         // const d = '2022/10/11';
-        const d = date.year + '-'+ date.month + '-' + date.day
+        const d = date.year + '-' + date.month + '-' + date.day;
 
         // create array tra ket qua
         const response = LoaiTietKiem.map((value) => {
@@ -135,6 +136,32 @@ const productQueries = {
             }
         }
         return response;
+    },
+
+    getReportOCMonth: async (_, { month, year }, { dataSources }) => {
+        let response = [];
+        // tim ngay cuoi cung cua thang
+        const dateInp = new Date();
+        dateInp.setFullYear(parseInt(year), parseInt(month));
+        dateInp.setDate(0);
+        const lastDayOfMonth = date.format(dateInp, 'DD'); // result
+
+        for (let i = 1; i <= parseInt(lastDayOfMonth); i++) {
+            // b1: merge date
+            let day;
+            i < 10 ? (day = '0' + i) : (day = i);
+            let date = year + '-' + month + '-' + i;
+            /////
+            // b2: access dataSource then get count all PGT with condition: NgayRut
+            let close = await dataSources.database.getReportCMonth(date);
+
+            // b3: access db to get pgt open with condition: NgayGoi
+            let open = await dataSources.database.getReportOMonth(date);
+
+            // b4: update response use destructuring
+            response = [...response, { day: date, open: open.count, close: close.count }];
+        }
+        return response
     },
 };
 

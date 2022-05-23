@@ -100,3 +100,9 @@ type reportDay {
     TongThu: Float!
     TongChi: Float!
 }
+
+type reportOCMonth {
+    day: String!
+    open: Int!
+    close: Int!
+}

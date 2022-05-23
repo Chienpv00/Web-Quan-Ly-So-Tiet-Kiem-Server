@@ -29,6 +29,9 @@ type Query {
 
     "product queries"
     getReportDay(date: Date!): [reportDay!]!
+
+    "product queries:"
+    getReportOCMonth(month: String!, year: String!): [reportOCMonth!]!
 }
 
 type Mutation {

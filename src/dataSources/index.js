@@ -296,6 +296,24 @@ class Database {
             });
         });
     }
+
+    getReportCMonth(date) {
+        return new Promise((resolve, reject) => {
+            const sql = `select COUNT(*) as count from PhieuGoiTien where NgayRut=\'${date}\' `;
+            this.connection.query(sql, (err, result) => {
+                err ? reject(err) : resolve(result[0]);
+            });
+        });
+    }
+
+    getReportOMonth(date){
+        return new Promise((resolve, reject) => {
+            const sql = `select COUNT(*) as count from PhieuGoiTien where NgayGoi=\'${date}\' `;
+            this.connection.query(sql, (err, result) => {
+                err ? reject(err) : resolve(result[0]);
+            });
+        });
+    }
 }
 
 module.exports = Database;
