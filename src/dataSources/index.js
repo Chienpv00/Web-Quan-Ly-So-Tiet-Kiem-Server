@@ -285,6 +285,17 @@ class Database {
             });
         });
     }
+
+    getListPGTbyDateMaLTK(MaLoaiTietKiem, { day, month, year }) {
+        return new Promise((resolve, reject) => {
+            MaLoaiTietKiem = this.connection.escape(MaLoaiTietKiem);
+
+            const sql = `select * From PhieuGoiTien where MaLoaiTietKiem = ${MaLoaiTietKiem} AND NgayGoi = \'${year}-${month}-${day}\'`;
+            this.connection.query(sql, (err, result) => {
+                err ? reject(err) : resolve(result);
+            });
+        });
+    }
 }
 
 module.exports = Database;

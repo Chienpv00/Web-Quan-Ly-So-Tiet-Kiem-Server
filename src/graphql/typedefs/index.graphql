@@ -26,6 +26,9 @@ type Query {
 
     "product queries"
     filterPGT(input: filterListPGT!): [DanhSachPgt]!
+
+    "product queries"
+    getReportDay(date: Date!): [reportDay!]!
 }
 
 type Mutation {
@@ -54,4 +57,10 @@ input filterListPGT{
     month: String
     year: String
 
+}
+
+input Date{
+    day: String
+    month: String
+    year: String
 }

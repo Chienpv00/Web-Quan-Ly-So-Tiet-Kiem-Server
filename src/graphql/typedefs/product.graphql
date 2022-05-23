@@ -94,3 +94,9 @@ type DanhSachPgt {
     "Trạng thái đóng/mở của phiếu (1 là mở, 0 là đóng)"
     TrangThai: Boolean!
 }
+
+type reportDay {
+    LoaiTietKiem: String!
+    TongThu: Float!
+    TongChi: Float!
+}
