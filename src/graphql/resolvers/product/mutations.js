@@ -110,7 +110,54 @@ const productMutations = {
         }
     },
 
-    
+    addLoaiTietKiem: async (_, { loaiTKInp }, { dataSources }) => {
+        try {
+            // get ma loai tiet kiem next
+            const ma = await dataSources.database.getMaLoaiTietKiemNext();
+
+            const resFromServer = await dataSources.database.addLoaiTietKiem({ ma, ...loaiTKInp });
+            console.log(
+                '🚀 ~ file: mutations.js ~ line 120 ~ addLoaiTietKiem: ~ resFromServer',
+                resFromServer
+            );
+
+            const LoaiTietKiem = await dataSources.database.getLoaiTietKiem(ma);
+            return {
+                code: 200,
+                success: resFromServer.affectedRows === 1,
+                message: 'Create Success',
+                LoaiTietKiem: resFromServer.affectedRows === 1 ? { ...LoaiTietKiem[0] } : null,
+            };
+        } catch (error) {
+            console.log('🚀 ~ file: mutations.js ~ line 131 ~ addLoaiTietKiem: ~ error', error);
+            return {
+                code: 404,
+                success: false,
+                message: 'errors from server',
+            };
+        }
+    },
+
+    deleteLoaiTietKiem: async (_, { ma }, { dataSources }) => {
+        try {
+            const LoaiTietKiem = await dataSources.database.getLoaiTietKiem(ma);
+            const resFromServer = await dataSources.database.deleteLoaiTietKiem(ma);
+
+            return {
+                code: 200,
+                success: resFromServer.affectedRows === 1,
+                message: 'Delete Success',
+                LoaiTietKiem: resFromServer.affectedRows === 1 ? { ...LoaiTietKiem[0] } : null,
+            };
+        } catch (error) {
+            console.log('🚀 ~ file: mutations.js ~ line 131 ~ addLoaiTietKiem: ~ error', error);
+            return {
+                code: 404,
+                success: false,
+                message: 'errors from server',
+            };
+        }
+    },
 };
 
 module.exports = productMutations;

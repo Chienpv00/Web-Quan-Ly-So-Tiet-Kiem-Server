@@ -105,4 +105,18 @@ type reportOCMonth {
     day: String!
     open: Int!
     close: Int!
+} 
+
+type addLoaiTietKiemResponse{
+    code: Int!
+    success: Boolean! 
+    message: String!
+    LoaiTietKiem: LoaiTietKiem
+}
+
+type deleteLoaiTietKiemResponse{
+    code: Int!
+    success: Boolean!
+    message: String!
+    LoaiTietKiem: LoaiTietKiem
 }

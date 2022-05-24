@@ -49,8 +49,16 @@ type Mutation {
         MaKhachHang: String!
     ): createPhieuGuiTienResponse!
 
-    "Tao Phieu Rut Tien"
+    "Tao Phieu Rut Tien" 
     createPhieuRutTien(MaPhieuGoi: String!, NgayRut: String!): createPhieuRutTienResponse!
+
+    "Them Loai tiet kiem"
+    addLoaiTietKiem(loaiTKInp: LoaiTietKiemInp!): addLoaiTietKiemResponse!
+
+    "Xoa LoaiTietKiem"
+    deleteLoaiTietKiem(ma: String!): deleteLoaiTietKiemResponse!
+
+    
 }
 
 
@@ -66,4 +74,12 @@ input Date{
     day: String
     month: String
     year: String
+}
+
+input LoaiTietKiemInp{
+    ten: String!
+    kyHan: Float!
+    laiSuat: Float!
+    ngayApDung: String!
+
 }
