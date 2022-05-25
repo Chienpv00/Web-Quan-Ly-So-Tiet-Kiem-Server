@@ -32,6 +32,9 @@ type Query {
 
     "product queries:"
     getReportOCMonth(month: String!, year: String!): [reportOCMonth!]!
+
+    "product Queries"
+    getLoaitkWithma(ma: String!): LoaiTietKiem!
 }
 
 type Mutation {

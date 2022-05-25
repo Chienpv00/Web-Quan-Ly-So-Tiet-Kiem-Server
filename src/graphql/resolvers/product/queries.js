@@ -160,7 +160,12 @@ const productQueries = {
             // b4: update response use destructuring
             response = [...response, { day: date, open: open.count, close: close.count }];
         }
-        return response
+        return response;
+    },
+
+    getLoaitkWithma: async (_, { ma }, { dataSources }) => {
+        const res = await dataSources.database.getLoaitkWithma(ma);
+        return res[0];
     },
 };
 
