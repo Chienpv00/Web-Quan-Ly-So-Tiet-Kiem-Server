@@ -31,7 +31,6 @@ const productQueries = {
 
     getLoaitk: async (_, __, { dataSources }) => {
         const loaitk = await dataSources.database.getLoaitk();
-        console.log('🚀 ~ file: queries.js ~ line 32 ~ getLoaitk: ~ loaitk', loaitk);
         return loaitk;
     },
 

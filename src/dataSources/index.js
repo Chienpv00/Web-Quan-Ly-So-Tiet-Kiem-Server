@@ -306,7 +306,7 @@ class Database {
         });
     }
 
-    getReportOMonth(date){
+    getReportOMonth(date) {
         return new Promise((resolve, reject) => {
             const sql = `select COUNT(*) as count from PhieuGoiTien where NgayGoi=\'${date}\' `;
             this.connection.query(sql, (err, result) => {
@@ -315,25 +315,29 @@ class Database {
         });
     }
 
-    addLoaiTietKiem({ma, ten, kyHan , laiSuat, ngayApDung}){
-        return new Promise ((resolve, reject) => {
-            const sql = `INSERT INTO LoaiTietKiem values (${this.connection.escape(ma)}, ${this.connection.escape(ten)}, ${this.connection.escape(kyHan)}, ${this.connection.escape(laiSuat)}, \'${ngayApDung}\')`
+    addLoaiTietKiem({ ma, ten, kyHan, laiSuat, ngayApDung }) {
+        return new Promise((resolve, reject) => {
+            const sql = `INSERT INTO LoaiTietKiem values (${this.connection.escape(
+                ma
+            )}, ${this.connection.escape(ten)}, ${this.connection.escape(
+                kyHan
+            )}, ${this.connection.escape(laiSuat)}, \'${ngayApDung}\')`;
             this.connection.query(sql, (err, result) => {
-                err? reject(err) : resolve(result)
-            })
-        })
+                err ? reject(err) : resolve(result);
+            });
+        });
     }
 
-    deleteLoaiTietKiem(ma){
-        return new Promise ((resolve, reject) => {
-            const sql = `DELETE FROM LOAITIETKIEM WHERE MaLoaiTietKiem = ${this.connection.escape(ma)}`
+    deleteLoaiTietKiem(ma) {
+        return new Promise((resolve, reject) => {
+            const sql = `DELETE FROM LOAITIETKIEM WHERE MaLoaiTietKiem = ${this.connection.escape(
+                ma
+            )}`;
             this.connection.query(sql, (err, result) => {
-                err? reject(err) : resolve(result)
-            })
-        })
+                err ? reject(err) : resolve(result);
+            });
+        });
     }
-
-    
 
     getMaLoaiTietKiemNext() {
         // dau tien doc ma khach hang len, sau do tao ma moi rồi trả vè
@@ -350,6 +354,25 @@ class Database {
                     });
                     resolve('LTK' + (Math.max.apply(null, arr) + 1));
                 }
+            });
+        });
+    }
+
+    updateLoaiTietKiem({ ma, ten, kyHan, laiSuat, ngayApDung }) {
+        return new Promise((resolve, reject) => {
+            const sql = `UPDATE LOAITIETKIEM SET TenLoaiTietKiem = ${this.connection.escape(
+                ten
+            )}, KyHan = ${this.connection.escape(
+                kyHan,
+                false
+            )}, LaiSuatHienTai = ${this.connection.escape(
+                laiSuat,
+                false
+            )}, NgayApDung=${this.connection.escape(
+                ngayApDung
+            )} WHERE MaLoaiTietKiem = ${this.connection.escape(ma)}`;
+            this.connection.query(sql, (err, result) => {
+                err ? reject(err) : resolve(result);
             });
         });
     }

@@ -12,7 +12,7 @@ type Query {
 
     "Lay phieu goi tien"
     getPhieuGoiTien(MaPhieuGoi: String!): PhieuGoiTien!
-    
+
     "Lay danh sach phieu goi tien bang cmnd"
     getDSPGTbyMaKH(MaKhachHang: String!): [DanhSachPgt]!
 
@@ -49,7 +49,7 @@ type Mutation {
         MaKhachHang: String!
     ): createPhieuGuiTienResponse!
 
-    "Tao Phieu Rut Tien" 
+    "Tao Phieu Rut Tien"
     createPhieuRutTien(MaPhieuGoi: String!, NgayRut: String!): createPhieuRutTienResponse!
 
     "Them Loai tiet kiem"
@@ -58,28 +58,34 @@ type Mutation {
     "Xoa LoaiTietKiem"
     deleteLoaiTietKiem(ma: String!): deleteLoaiTietKiemResponse!
 
-    
+    "Sua LoaiTietKiem"
+    updateLoaiTietKiem(loaiTKInp: UpdateLTKInp!): addLoaiTietKiemResponse!
 }
 
-
-input filterListPGT{
+input filterListPGT {
     loaiTK: String
     status: String
     month: String
     year: String
-
 }
 
-input Date{
+input Date {
     day: String
     month: String
     year: String
 }
 
-input LoaiTietKiemInp{
+input LoaiTietKiemInp {
     ten: String!
     kyHan: Float!
     laiSuat: Float!
     ngayApDung: String!
+}
 
+input UpdateLTKInp {
+    ma: String!
+    ten: String!
+    kyHan: Float!
+    laiSuat: Float!
+    ngayApDung: String!
 }

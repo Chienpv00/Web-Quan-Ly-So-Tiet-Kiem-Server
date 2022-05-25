@@ -116,10 +116,7 @@ const productMutations = {
             const ma = await dataSources.database.getMaLoaiTietKiemNext();
 
             const resFromServer = await dataSources.database.addLoaiTietKiem({ ma, ...loaiTKInp });
-            console.log(
-                '🚀 ~ file: mutations.js ~ line 120 ~ addLoaiTietKiem: ~ resFromServer',
-                resFromServer
-            );
+            
 
             const LoaiTietKiem = await dataSources.database.getLoaiTietKiem(ma);
             return {
@@ -158,6 +155,32 @@ const productMutations = {
             };
         }
     },
+
+    updateLoaiTietKiem: async (_, {loaiTKInp}, {dataSources}) => {
+        try {
+
+            const resFromServer = await dataSources.database.updateLoaiTietKiem(loaiTKInp);
+            console.log(
+                '🚀 ~ file: mutations.js ~ line 120 ~ addLoaiTietKiem: ~ resFromServer',
+                resFromServer
+            );
+
+            const LoaiTietKiem = await dataSources.database.getLoaiTietKiem(loaiTKInp.ma);
+            return {
+                code: 200,
+                success: resFromServer.affectedRows === 1,
+                message: 'Update Success',
+                LoaiTietKiem: resFromServer.affectedRows === 1 ? { ...LoaiTietKiem[0] } : null,
+            };
+        } catch (error) {
+            console.log('🚀 ~ file: mutations.js ~ line 131 ~ addLoaiTietKiem: ~ error', error);
+            return {
+                code: 404,
+                success: false,
+                message: 'errors from server',
+            };
+        }
+    }
 };
 
 module.exports = productMutations;
