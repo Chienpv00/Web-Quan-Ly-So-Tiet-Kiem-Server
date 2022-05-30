@@ -60,7 +60,7 @@ class Database {
     getChucNangNguoiDung(MaNhom) {
         return new Promise((resolve, reject) => {
             //sql statement
-            const sql = `select * from chucnang where machucnang = (select machucnang from PHANQUYEN where MaNhom= \'${MaNhom}\')`;
+            const sql = `select * from chucnang where machucnang IN (select machucnang from PHANQUYEN where MaNhom= \'${MaNhom}\')`;
 
             // return array
             this.connection.query(sql, (err, result) => {
@@ -279,7 +279,6 @@ class Database {
 
         return new Promise((resolve, reject) => {
             let sql = `select * from PhieuGoiTien where ${sqlLoaiTK} ${sqlStatus} ${sqlDate} `;
-            console.log(sql);
             this.connection.query(sql, (err, results) => {
                 err ? reject(err) : resolve(results);
             });
@@ -321,7 +320,7 @@ class Database {
                 ma
             )}, ${this.connection.escape(ten)}, ${this.connection.escape(
                 kyHan
-            )}, ${this.connection.escape(laiSuat)}, \'${ngayApDung}\')`;
+            )}, ${this.connection.escape(laiSuat)}, \'${ngayApDung}\', true)`;
             this.connection.query(sql, (err, result) => {
                 err ? reject(err) : resolve(result);
             });
@@ -330,7 +329,7 @@ class Database {
 
     deleteLoaiTietKiem(ma) {
         return new Promise((resolve, reject) => {
-            const sql = `DELETE FROM LOAITIETKIEM WHERE MaLoaiTietKiem = ${this.connection.escape(
+            const sql = `UPDATE LOAITIETKIEM SET TrangThai=false WHERE MaLoaiTietKiem = ${this.connection.escape(
                 ma
             )}`;
             this.connection.query(sql, (err, result) => {
@@ -358,7 +357,7 @@ class Database {
         });
     }
 
-    updateLoaiTietKiem({ ma, ten, kyHan, laiSuat, ngayApDung }) {
+    updateLoaiTietKiem({ ma, ten, kyHan, laiSuat, ngayApDung, trangThai }) {
         return new Promise((resolve, reject) => {
             const sql = `UPDATE LOAITIETKIEM SET TenLoaiTietKiem = ${this.connection.escape(
                 ten
@@ -370,7 +369,8 @@ class Database {
                 false
             )}, NgayApDung=${this.connection.escape(
                 ngayApDung
-            )} WHERE MaLoaiTietKiem = ${this.connection.escape(ma)}`;
+            )}, TrangThai=${trangThai} WHERE MaLoaiTietKiem = ${this.connection.escape(ma)}`;
+            
             this.connection.query(sql, (err, result) => {
                 err ? reject(err) : resolve(result);
             });

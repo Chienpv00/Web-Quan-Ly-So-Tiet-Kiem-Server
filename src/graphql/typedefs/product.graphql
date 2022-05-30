@@ -19,6 +19,8 @@ type LoaiTietKiem {
     LaiSuatHienTai: Float!
     "Ngày áp dụng loại tiết kiệm"
     NgayApDung: String!
+
+    TrangThai: Boolean!
 }
 
 type PhieuGoiTien {

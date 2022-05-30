@@ -91,4 +91,5 @@ input UpdateLTKInp {
     kyHan: Float!
     laiSuat: Float!
     ngayApDung: String!
+    trangThai: String
 }

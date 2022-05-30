@@ -79,7 +79,6 @@ const productMutations = {
                 pgt.NgayGoi,
                 pgt?.NgayDaoHanKeTiep
             );
-            console.log('sodu: ', SoDu);
             const TienLaiPhatSinh = SoDu - pgt.SoTienGoi;
 
             const callDB = await dataSources.database.createPhieuRutTien(
@@ -160,10 +159,7 @@ const productMutations = {
         try {
 
             const resFromServer = await dataSources.database.updateLoaiTietKiem(loaiTKInp);
-            console.log(
-                '🚀 ~ file: mutations.js ~ line 120 ~ addLoaiTietKiem: ~ resFromServer',
-                resFromServer
-            );
+            
 
             const LoaiTietKiem = await dataSources.database.getLoaiTietKiem(loaiTKInp.ma);
             return {

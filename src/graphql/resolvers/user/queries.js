@@ -2,9 +2,12 @@ const userQueries = {
     checkLogin: async (_, { TenDangNhap, MatKhau }, { dataSources }) => {
         try {
             const user = await dataSources.database.getNguoiDung(TenDangNhap);
+            console.log("🚀 ~ file: queries.js ~ line 5 ~ checkLogin: ~ user", user)
             // lay lieu trong bang NhomNguoiDung -> {MaNhom, Ten Nhom}
             const nhomNDObj = await dataSources.database.getNhomNguoiDung(user.MaNhom);
+            console.log("🚀 ~ file: queries.js ~ line 8 ~ checkLogin: ~ nhomNDObj", nhomNDObj)
             const chucNangArr = await dataSources.database.getChucNangNguoiDung(user.MaNhom);
+            console.log("🚀 ~ file: queries.js ~ line 10 ~ checkLogin: ~ chucNangArr", chucNangArr)
             if (user) {
                 if (MatKhau === user.MatKhau) {
                     return {
